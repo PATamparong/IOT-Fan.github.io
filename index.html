@@ -1,83 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>IOT-FanSwitch</title>
-        <link href="/favicon.ico" type="image/x-icon" rel="icon" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <style>
-            .switch{
-            background-color: aqua  
-            }
-            .off{
-            background-color:orange  
-            }
-        </style>
-    </head>
-    <body>
-        <center>
+
+<head>
+    <title>IOT-FanSwitch</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    body{
+        background-size: cover;
+        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFFi5rDV9BK8ii6jbcXqA6S96l0lAO7Ipw4HDQInWHZQVwmQAjJA")
+    }
+    h1{
+        font-family: cursive;
+        margin-top: 10%;
+        background-color: orange;
+    }
+    .card{
+        background: transparent;
+    }
+</style>
+<body>
+    <center>
+        <div class="container">
             <h1>Fan Switch</h1>
-            <h2></h2>
-        <div>
-            <button class="off" id="off">off</button>
-            <button class="switch" id="one">1</button>
-            <button class="switch" id="two">2</button>
-            <button class="switch" id="three">3</button>
+            <div class="card">
+                <div class="card-body">
+                        <h2></h2><br><br><br>
+                    <button class="btn btn-warning" id="off">off</button>
+                    <button class="btn btn-primary" id="one">1</button>
+                    <button class="btn btn-primary" id="two">2</button>
+                    <button class="btn btn-primary" id="three">3</button>
+                </div>
+            </div>
+
+
+
         </div>
-        </center>
-    </body>
-    
+    </center>
+</body>
+
 </html>
 <script src="browser-mqtt.js"></script>
 <script>
     //create variables
-var off = document.getElementById("off");
-var one = document.getElementById("one");
-var two = document.getElementById("two");
-var three = document.getElementById("three");
-var client = mqtt.connect("wss://test.mosquitto.org:8081/mqtt");
+    var off = document.getElementById("off");
+    var one = document.getElementById("one");
+    var two = document.getElementById("two");
+    var three = document.getElementById("three");
+    var client = mqtt.connect("wss://test.mosquitto.org:8081/mqtt");
 
-//disable this button at start
-// document.getElementById("off").disabled = true;
+    //disable this button at start
+    // document.getElementById("off").disabled = true;
 
-//event for off
-off.addEventListener('click',function(e){
-    e.preventDefault();
-    // document.getElementById("off").disabled = false;
-    if(off){
-      console.log("fan is turned off");
-      call(" off ");
-    }
-    // off.end();
-})
-//event for one
-one.addEventListener('click',function(e){
-    e.preventDefault();
-    if(one){
-      console.log("you turned at one...");
-      call("at 1");
-    }
-})
-//event for two 
-two.addEventListener('click',function(e){
-  e.preventDefault();
-  if(two){
-    console.log("you turned at two...");
-    call(" at 2");
-  }
-})
-//event for three
-three.addEventListener('click',function(e){
-  e.preventDefault();
-  if(three){
-    console.log("you turned at three...");
-    call("at 3");
-  }
-})
-function call (label) {
-    var time  = new Date()
-    var payload = "turned " + label
-    $("h2").text(payload);  
-    var topic= "pre"
-    client.publish(topic,payload + " " + time);
-};
+    //event for off
+    off.addEventListener('click', function (e) {
+        e.preventDefault();
+        // document.getElementById("off").disabled = false;
+        if (off) {
+            console.log("fan is turned off");
+            call(" off ");
+        }
+        // off.end();
+    })
+    //event for one
+    one.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (one) {
+            console.log("you turned at one...");
+            call("at 1");
+        }
+    })
+    //event for two 
+    two.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (two) {
+            console.log("you turned at two...");
+            call(" at 2");
+        }
+    })
+    //event for three
+    three.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (three) {
+            console.log("you turned at three...");
+            call("at 3");
+        }
+    })
+    function call(label) {
+        var time = new Date()
+        var payload = "turned " + label
+        $("h2").text(payload);
+        var topic = "pre"
+        client.publish(topic, payload + " " + time);
+    };
 </script>
