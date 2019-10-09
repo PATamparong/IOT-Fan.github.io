@@ -96,7 +96,7 @@
         var time = new Date()
         var payload = "turned " + label
         $("h2").text(payload);
-        var topic = "pre"
+        var topic = "precious/fan/status"
         client.publish(topic, payload + " " + time);
     };
 </script>
