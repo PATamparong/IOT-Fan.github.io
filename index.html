@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>IOT-FanSwitch</title>
+        <link href="/favicon.ico" type="image/x-icon" rel="icon" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <style>
+            .switch{
+            background-color: aqua  
+            }
+            .off{
+            background-color:orange  
+            }
+        </style>
+    </head>
+    <body>
+        <center>
+            <h1>Fan Switch</h1>
+            <h2></h2>
+        <div>
+            <button class="off" id="off">off</button>
+            <button class="switch" id="one">1</button>
+            <button class="switch" id="two">2</button>
+            <button class="switch" id="three">3</button>
+        </div>
+        </center>
+    </body>
+    
+</html>
+<script src="browser-mqtt.js"></script>
+<script>
+    //create variables
+var off = document.getElementById("off");
+var one = document.getElementById("one");
+var two = document.getElementById("two");
+var three = document.getElementById("three");
+var client = mqtt.connect("wss://test.mosquitto.org:8081/mqtt");
+
+//disable this button at start
+// document.getElementById("off").disabled = true;
+
+//event for off
+off.addEventListener('click',function(e){
+    e.preventDefault();
+    // document.getElementById("off").disabled = false;
+    if(off){
+      console.log("fan is turned off");
+      call(" off ");
+    }
+    // off.end();
+})
+//event for one
+one.addEventListener('click',function(e){
+    e.preventDefault();
+    if(one){
+      console.log("you turned at one...");
+      call("at 1");
+    }
+})
+//event for two 
+two.addEventListener('click',function(e){
+  e.preventDefault();
+  if(two){
+    console.log("you turned at two...");
+    call(" at 2");
+  }
+})
+//event for three
+three.addEventListener('click',function(e){
+  e.preventDefault();
+  if(three){
+    console.log("you turned at three...");
+    call("at 3");
+  }
+})
+function call (label) {
+    var time  = new Date()
+    var payload = "turned " + label
+    $("h2").text(payload);  
+    var topic= "pre"
+    client.publish(topic,payload + " " + time);
+};
+</script>
